@@ -35,22 +35,22 @@ export default function CategorySection({ programmes, onSelectCategory }) {
   const countOf = (cat) => programmes.filter(p => p.category === cat).length
 
   return (
-    <section className="relative py-16 sm:py-24 px-4 sm:px-6">
+    <section className="relative py-10 sm:py-20 px-3 sm:px-6">
       <div className="max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-12"
+          className="text-center mb-8 sm:mb-12"
         >
-          <div className="text-xs uppercase tracking-[0.3em] text-cyan-glow/80 mb-3">Programme Levels</div>
-          <h2 className="font-display font-extrabold text-3xl sm:text-5xl text-white">
+          <div className="text-[10px] sm:text-xs uppercase tracking-[0.3em] text-cyan-glow/80 mb-2 sm:mb-3">Programme Levels</div>
+          <h2 className="font-display font-extrabold text-2xl sm:text-4xl lg:text-5xl text-white">
             Choose Your <span className="text-gradient">Pathway</span>
           </h2>
-          <p className="mt-3 text-white/60 max-w-2xl mx-auto">Three premium programme tiers — from certificates to PhD — every step of your academic journey.</p>
+          <p className="mt-2 sm:mt-3 text-sm sm:text-base text-white/60 max-w-2xl mx-auto px-2">Three programme tiers — from certificates to PhD — every step of your academic journey.</p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
           {CATEGORIES.map((cat, i) => {
             const Icon = cat.Icon
             const count = countOf(cat.key)
@@ -65,7 +65,7 @@ export default function CategorySection({ programmes, onSelectCategory }) {
                 onClick={() => onSelectCategory?.(cat.key)}
                 className="group relative text-left"
               >
-                <div className="gradient-border h-full p-8 rounded-3xl overflow-hidden relative">
+                <div className="gradient-border h-full p-6 sm:p-8 rounded-3xl overflow-hidden relative">
                   <div className={`absolute inset-0 bg-gradient-to-br ${cat.gradient} opacity-60`} />
                   <div className="absolute -top-12 -right-12 w-40 h-40 rounded-full opacity-40 group-hover:opacity-70 transition-opacity blur-2xl" style={{ background: cat.accent }} />
 

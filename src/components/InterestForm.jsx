@@ -95,15 +95,15 @@ export default function InterestForm({ open, onClose, programme, programmes }) {
 
               {!success ? (
                 <>
-                  <div className="px-6 sm:px-8 pt-8 pb-4">
-                    <div className="text-xs uppercase tracking-[0.3em] text-cyan-glow/80 mb-2 flex items-center gap-1.5">
+                  <div className="px-5 sm:px-8 pt-7 sm:pt-8 pb-4 pr-12">
+                    <div className="text-[10px] sm:text-xs uppercase tracking-[0.3em] text-cyan-glow/80 mb-2 flex items-center gap-1.5">
                       <Send size={12} /> Express Interest
                     </div>
-                    <h2 className="font-display font-extrabold text-2xl sm:text-3xl">Tell us about you</h2>
-                    <p className="text-sm text-white/60 mt-1">Our team will reach out via your preferred channel.</p>
+                    <h2 className="font-display font-extrabold text-xl sm:text-3xl">Tell us about you</h2>
+                    <p className="text-xs sm:text-sm text-white/60 mt-1">Our team will reach out via your preferred channel.</p>
                   </div>
 
-                  <form onSubmit={submit} className="px-6 sm:px-8 pb-6 space-y-3">
+                  <form onSubmit={submit} className="px-5 sm:px-8 pb-6 space-y-3">
                     <Field icon={User} label="Full name" error={errors.fullName}>
                       <input
                         value={form.fullName}

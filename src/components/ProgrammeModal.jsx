@@ -54,7 +54,7 @@ export default function ProgrammeModal({ programme, allProgrammes, onClose, onIn
               className="glass-strong rounded-3xl w-full max-w-4xl relative overflow-hidden"
             >
               {/* Header */}
-              <div className="relative px-6 sm:px-8 pt-8 pb-5 border-b border-white/10">
+              <div className="relative px-4 sm:px-8 pt-7 sm:pt-8 pb-4 sm:pb-5 border-b border-white/10">
                 <div className="absolute top-4 right-4 z-20">
                   <button onClick={onClose} className="h-10 w-10 rounded-xl bg-white/5 hover:bg-white/15 border border-white/10 grid place-items-center transition-colors">
                     <X size={18} />
@@ -64,18 +64,18 @@ export default function ProgrammeModal({ programme, allProgrammes, onClose, onIn
                   <div className="absolute -top-20 -right-20 w-80 h-80 rounded-full bg-gradient-to-br from-cyan-glow to-teal-500 blur-3xl" />
                 </div>
                 <div className="relative">
-                  <div className="flex flex-wrap items-center gap-2 mb-3">
-                    <span className="text-xs uppercase tracking-widest text-cyan-glow/80">{programme.category}</span>
-                    <span className="text-xs px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-400/30">{programme.intakeStatus}</span>
-                    {programme.featured && <span className="text-xs px-2 py-0.5 rounded-full bg-gold-400/15 text-gold-400 border border-gold-400/30 inline-flex items-center gap-1"><Star size={11} /> Featured</span>}
+                  <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 mb-2 sm:mb-3 pr-10">
+                    <span className="text-[10px] sm:text-xs uppercase tracking-widest text-cyan-glow/80">{programme.category}</span>
+                    <span className="text-[10px] sm:text-xs px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-400/30">{programme.intakeStatus}</span>
+                    {programme.featured && <span className="text-[10px] sm:text-xs px-2 py-0.5 rounded-full bg-gold-400/15 text-gold-400 border border-gold-400/30 inline-flex items-center gap-1"><Star size={10} /> Featured</span>}
                   </div>
-                  <h2 className="font-display font-extrabold text-2xl sm:text-3xl lg:text-4xl pr-12">{programme.programmeName}</h2>
-                  <div className="text-sm text-white/65 mt-1">{programme.faculty}</div>
+                  <h2 className="font-display font-extrabold text-xl sm:text-3xl lg:text-4xl pr-10 sm:pr-12 leading-tight">{programme.programmeName}</h2>
+                  <div className="text-xs sm:text-sm text-white/65 mt-1">{programme.faculty}</div>
                 </div>
               </div>
 
               {/* Quick stats */}
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-2 px-6 sm:px-8 py-5 border-b border-white/10">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-2 px-4 sm:px-8 py-4 sm:py-5 border-b border-white/10">
                 <Stat icon={Layers} label="Level" value={programme.level} />
                 <Stat icon={Clock} label="Duration" value={programme.duration} />
                 <Stat icon={Calendar} label="Mode" value={programme.studyMode} />
@@ -83,7 +83,7 @@ export default function ProgrammeModal({ programme, allProgrammes, onClose, onIn
               </div>
 
               {/* Tabs */}
-              <div className="px-6 sm:px-8 pt-5">
+              <div className="px-4 sm:px-8 pt-4 sm:pt-5">
                 <div className="flex gap-1 border-b border-white/10 overflow-x-auto -mx-1 px-1">
                   {TABS.map(t => {
                     const Icon = t.icon
@@ -106,7 +106,7 @@ export default function ProgrammeModal({ programme, allProgrammes, onClose, onIn
               </div>
 
               {/* Content */}
-              <div className="px-6 sm:px-8 py-6 max-h-[55vh] overflow-y-auto">
+              <div className="px-4 sm:px-8 py-5 sm:py-6 max-h-[50vh] sm:max-h-[55vh] overflow-y-auto">
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={tab}
@@ -209,7 +209,7 @@ export default function ProgrammeModal({ programme, allProgrammes, onClose, onIn
               </div>
 
               {/* Action bar */}
-              <div className="px-6 sm:px-8 py-5 border-t border-white/10 flex flex-col sm:flex-row gap-2 bg-navy-900/40">
+              <div className="px-4 sm:px-8 py-4 sm:py-5 border-t border-white/10 flex flex-col sm:flex-row gap-2 bg-navy-900/40">
                 <button onClick={() => onInterest?.(programme)} className="btn-gold flex-1">
                   <Send size={15} /> I’m Interested
                 </button>

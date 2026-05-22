@@ -1,6 +1,6 @@
 import { useState, useMemo, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Search, SlidersHorizontal, X, MapPin, Clock, Layers, Calendar, ArrowRight, Filter } from 'lucide-react'
+import { Search, SlidersHorizontal, X, MapPin, Clock, Layers, Calendar, ArrowRight, Filter, Sparkles } from 'lucide-react'
 
 const STATUS_STYLES = {
   'Open': 'bg-emerald-500/15 text-emerald-300 border-emerald-400/30',
@@ -53,20 +53,25 @@ export default function BrowseProgrammes({ programmes, query, setQuery, initialF
     })
   }, [programmes, query, filters])
 
-  const activeFilterCount = Object.values(filters).filter(v => v !== 'All').length + (query ? 1 : 0)
+  const hasFilter = Object.values(filters).some(v => v !== 'All')
+  const hasQuery = !!(query && query.trim())
+  const hasSearched = hasFilter || hasQuery
+  const activeFilterCount = Object.values(filters).filter(v => v !== 'All').length + (hasQuery ? 1 : 0)
 
   const clearAll = () => {
     setFilters({ category: 'All', faculty: 'All', level: 'All', studyMode: 'All', campus: 'All', intakeStatus: 'All' })
     setQuery?.('')
   }
 
+  const POPULAR_TERMS = ['Quran', 'Teaching', 'Shariʿah', 'Arabic', 'Business', 'Finance', 'Imaamship']
+
   return (
-    <section id="browse" className="relative py-16 sm:py-24 px-4 sm:px-6">
+    <section id="browse" className="relative py-12 sm:py-20 px-3 sm:px-6">
       <div className="max-w-7xl mx-auto">
-        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-8">
-          <div className="text-xs uppercase tracking-[0.3em] text-cyan-glow/80 mb-3">All Programmes</div>
-          <h2 className="font-display font-extrabold text-3xl sm:text-5xl">Browse <span className="text-gradient">Programmes</span></h2>
-          <p className="mt-2 text-white/60">{programmes.length} programmes — search, filter, and find your fit.</p>
+        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-6 sm:mb-8">
+          <div className="text-[10px] sm:text-xs uppercase tracking-[0.3em] text-cyan-glow/80 mb-2 sm:mb-3">Find a Programme</div>
+          <h2 className="font-display font-extrabold text-2xl sm:text-4xl lg:text-5xl">Search <span className="text-gradient">Programmes</span></h2>
+          <p className="mt-2 text-sm sm:text-base text-white/60">{programmes.length} programmes available — type a keyword or pick a filter to see matches.</p>
         </motion.div>
 
         {/* Search & filter bar */}
@@ -120,38 +125,83 @@ export default function BrowseProgrammes({ programmes, query, setQuery, initialF
           </div>
         </div>
 
-        {/* Results count */}
-        <div className="flex items-center justify-between mb-4">
-          <div className="text-sm text-white/60">
-            <span className="font-bold text-white">{results.length}</span> {results.length === 1 ? 'programme' : 'programmes'} found
-          </div>
-        </div>
-
-        {/* Grid */}
-        {results.length === 0 ? (
-          <div className="glass rounded-3xl p-12 text-center">
-            <div className="text-5xl mb-3">🔍</div>
-            <h3 className="font-display font-bold text-xl mb-2">No programmes match your filters</h3>
-            <p className="text-white/60 mb-4">Try widening your search or clearing filters.</p>
-            <button onClick={clearAll} className="btn-glow">Clear filters</button>
-          </div>
+        {/* Results — only after the user searches or filters */}
+        {!hasSearched ? (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="glass rounded-3xl px-5 sm:px-10 py-10 sm:py-14 text-center relative overflow-hidden"
+          >
+            <div className="absolute -top-20 -left-20 w-60 h-60 rounded-full bg-cyan-glow/15 blur-3xl pointer-events-none" />
+            <div className="absolute -bottom-20 -right-20 w-60 h-60 rounded-full bg-gold-400/10 blur-3xl pointer-events-none" />
+            <div className="relative">
+              <motion.div
+                animate={{ y: [0, -6, 0] }}
+                transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+                className="inline-flex h-16 w-16 rounded-2xl bg-gradient-to-br from-cyan-glow to-teal-500 grid place-items-center shadow-glow-cyan mb-4"
+              >
+                <Search size={26} className="text-navy-900" />
+              </motion.div>
+              <h3 className="font-display font-bold text-xl sm:text-2xl mb-2">Start searching to see programmes</h3>
+              <p className="text-sm text-white/60 max-w-md mx-auto mb-5">
+                Type in the search box above, pick a filter, or tap a popular topic.
+              </p>
+              <div className="flex flex-wrap gap-1.5 sm:gap-2 justify-center">
+                {POPULAR_TERMS.map(t => (
+                  <button
+                    key={t}
+                    onClick={() => setQuery?.(t)}
+                    className="chip text-xs sm:text-sm"
+                  >
+                    {t}
+                  </button>
+                ))}
+              </div>
+              <div className="mt-6 inline-flex items-center gap-1.5 text-[11px] uppercase tracking-widest text-white/40">
+                <Sparkles size={11} className="text-gold-400" />
+                <span>or use the Find My Course quiz for a personalised match</span>
+              </div>
+            </div>
+          </motion.div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            <AnimatePresence mode="popLayout">
-              {results.map((p, i) => (
-                <motion.div
-                  key={p.id}
-                  layout
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  transition={{ duration: 0.3, delay: Math.min(i * 0.04, 0.4) }}
-                >
-                  <ProgrammeCard p={p} onView={onView} onInterest={onInterest} />
-                </motion.div>
-              ))}
-            </AnimatePresence>
-          </div>
+          <>
+            <div className="flex items-center justify-between mb-4">
+              <div className="text-sm text-white/60">
+                <span className="font-bold text-white">{results.length}</span> {results.length === 1 ? 'programme' : 'programmes'} found
+              </div>
+              {activeFilterCount > 0 && (
+                <button onClick={clearAll} className="text-xs text-white/55 hover:text-white inline-flex items-center gap-1">
+                  <X size={12} /> Clear
+                </button>
+              )}
+            </div>
+
+            {results.length === 0 ? (
+              <div className="glass rounded-3xl p-8 sm:p-12 text-center">
+                <div className="text-5xl mb-3">🔍</div>
+                <h3 className="font-display font-bold text-lg sm:text-xl mb-2">No programmes match your filters</h3>
+                <p className="text-sm text-white/60 mb-4">Try widening your search or clearing filters.</p>
+                <button onClick={clearAll} className="btn-glow">Clear filters</button>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
+                <AnimatePresence mode="popLayout">
+                  {results.map((p, i) => (
+                    <motion.div
+                      key={p.id}
+                      layout
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -10 }}
+                      transition={{ duration: 0.3, delay: Math.min(i * 0.03, 0.3) }}
+                    >
+                      <ProgrammeCard p={p} onView={onView} onInterest={onInterest} />
+                    </motion.div>
+                  ))}
+                </AnimatePresence>
+              </div>
+            )}
+          </>
         )}
       </div>
     </section>
@@ -184,7 +234,7 @@ export function ProgrammeCard({ p, onView, onInterest }) {
       transition={{ type: 'spring', stiffness: 300, damping: 25 }}
       className="group relative h-full"
     >
-      <div className="gradient-border h-full p-6 rounded-3xl flex flex-col relative overflow-hidden">
+      <div className="gradient-border h-full p-4 sm:p-6 rounded-3xl flex flex-col relative overflow-hidden">
         {/* glow on hover */}
         <div className="pointer-events-none absolute -inset-px rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
              style={{ background: 'radial-gradient(circle at 50% 0%, rgba(34,211,238,0.18), transparent 60%)' }} />

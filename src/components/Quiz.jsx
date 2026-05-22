@@ -208,13 +208,13 @@ export default function Quiz({ open, onClose, programmes, onViewProgramme, onInt
               </button>
 
               {/* Progress */}
-              <div className="px-6 sm:px-10 pt-8">
-                <div className="flex items-center justify-between mb-2">
-                  <div className="flex items-center gap-2 text-xs uppercase tracking-[0.3em] text-cyan-glow/80">
-                    <Sparkles size={14} />
-                    {done ? 'Your Pathway' : `Question ${step + 1} of ${QUESTIONS.length}`}
+              <div className="px-4 sm:px-10 pt-6 sm:pt-8 pr-14 sm:pr-10">
+                <div className="flex items-center justify-between mb-2 gap-2">
+                  <div className="flex items-center gap-1.5 text-[10px] sm:text-xs uppercase tracking-[0.2em] sm:tracking-[0.3em] text-cyan-glow/80 truncate">
+                    <Sparkles size={12} className="flex-shrink-0" />
+                    {done ? 'Your Pathway' : `Q ${step + 1} / ${QUESTIONS.length}`}
                   </div>
-                  <div className="text-xs text-white/50">{Math.round(progress)}%</div>
+                  <div className="text-[10px] sm:text-xs text-white/50 flex-shrink-0">{Math.round(progress)}%</div>
                 </div>
                 <div className="h-1.5 rounded-full bg-white/5 overflow-hidden">
                   <motion.div
@@ -226,7 +226,7 @@ export default function Quiz({ open, onClose, programmes, onViewProgramme, onInt
               </div>
 
               {/* Content */}
-              <div className="p-6 sm:p-10 pt-6">
+              <div className="p-4 sm:p-10 pt-5 sm:pt-6">
                 <AnimatePresence mode="wait">
                   {!done ? (
                     <motion.div
@@ -236,10 +236,10 @@ export default function Quiz({ open, onClose, programmes, onViewProgramme, onInt
                       exit={{ opacity: 0, x: -30 }}
                       transition={{ duration: 0.35 }}
                     >
-                      <h2 className="font-display font-extrabold text-2xl sm:text-4xl mb-2">{current.title}</h2>
-                      <p className="text-white/60 text-sm mb-6">{current.multi ? 'Select all that apply.' : 'Pick one option.'}</p>
+                      <h2 className="font-display font-extrabold text-xl sm:text-4xl mb-1.5 leading-tight">{current.title}</h2>
+                      <p className="text-white/60 text-xs sm:text-sm mb-4 sm:mb-6">{current.multi ? 'Select all that apply.' : 'Pick one option.'}</p>
 
-                      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+                      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-3">
                         {current.options.map(opt => {
                           const a = answers[current.id]
                           const selected = current.multi ? (a || []).includes(opt) : a === opt
@@ -249,15 +249,15 @@ export default function Quiz({ open, onClose, programmes, onViewProgramme, onInt
                               whileHover={{ y: -2 }}
                               whileTap={{ scale: 0.97 }}
                               onClick={() => toggleAnswer(opt)}
-                              className={`relative px-4 py-4 rounded-2xl text-left text-sm font-semibold transition-all overflow-hidden ${selected ? 'border-cyan-glow/60 bg-cyan-glow/10 shadow-glow-cyan' : 'border-white/10 hover:border-cyan-glow/30 bg-white/5 hover:bg-white/10'} border`}
+                              className={`relative px-3 py-3 sm:px-4 sm:py-4 rounded-2xl text-left text-xs sm:text-sm font-semibold transition-all overflow-hidden ${selected ? 'border-cyan-glow/60 bg-cyan-glow/10 shadow-glow-cyan' : 'border-white/10 hover:border-cyan-glow/30 bg-white/5 hover:bg-white/10'} border`}
                             >
-                              <span className="relative z-10">{opt}</span>
+                              <span className="relative z-10 pr-5">{opt}</span>
                               {selected && (
                                 <motion.span
                                   layoutId={`check-${current.id}-${opt}`}
-                                  className="absolute top-2 right-2 h-6 w-6 rounded-full bg-gradient-to-br from-cyan-glow to-teal-500 grid place-items-center"
+                                  className="absolute top-1.5 right-1.5 h-5 w-5 sm:h-6 sm:w-6 rounded-full bg-gradient-to-br from-cyan-glow to-teal-500 grid place-items-center"
                                 >
-                                  <Check size={13} className="text-navy-900" />
+                                  <Check size={11} className="text-navy-900" />
                                 </motion.span>
                               )}
                               {selected && (
@@ -268,20 +268,20 @@ export default function Quiz({ open, onClose, programmes, onViewProgramme, onInt
                         })}
                       </div>
 
-                      <div className="mt-8 flex items-center justify-between">
+                      <div className="mt-6 sm:mt-8 flex items-center justify-between">
                         <button
                           onClick={prev}
                           disabled={step === 0}
-                          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-medium text-white/70 hover:text-white disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+                          className="inline-flex items-center gap-1.5 px-3 sm:px-5 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm font-medium text-white/70 hover:text-white disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
                         >
-                          <ArrowLeft size={15} /> Back
+                          <ArrowLeft size={14} /> Back
                         </button>
                         <button
                           onClick={next}
                           disabled={!isAnswered()}
-                          className="btn-glow disabled:opacity-40 disabled:cursor-not-allowed"
+                          className="btn-glow disabled:opacity-40 disabled:cursor-not-allowed text-sm sm:text-base py-2.5 sm:py-3 px-4 sm:px-6"
                         >
-                          {isLast ? 'See Results' : 'Next'} <ArrowRight size={16} />
+                          {isLast ? 'See Results' : 'Next'} <ArrowRight size={15} />
                         </button>
                       </div>
                     </motion.div>
@@ -328,17 +328,17 @@ function ResultsView({ results, onReset, onView, onInterest }) {
         ))}
       </div>
 
-      <div className="text-center mb-8">
+      <div className="text-center mb-6 sm:mb-8">
         <motion.div
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
           transition={{ type: 'spring', stiffness: 200, damping: 12, delay: 0.1 }}
-          className="inline-flex items-center justify-center h-16 w-16 rounded-2xl bg-gradient-to-br from-cyan-glow to-teal-500 shadow-glow-cyan mb-4"
+          className="inline-flex items-center justify-center h-14 w-14 sm:h-16 sm:w-16 rounded-2xl bg-gradient-to-br from-cyan-glow to-teal-500 shadow-glow-cyan mb-3 sm:mb-4"
         >
-          <Sparkles className="text-navy-900" size={28} />
+          <Sparkles className="text-navy-900" size={24} />
         </motion.div>
-        <h2 className="font-display font-extrabold text-3xl sm:text-4xl mb-2">Your Recommended IUM Pathway</h2>
-        <p className="text-white/60">Top {results.length} programme matches based on your answers</p>
+        <h2 className="font-display font-extrabold text-xl sm:text-3xl lg:text-4xl mb-2 leading-tight">Your Recommended IUM Pathway</h2>
+        <p className="text-xs sm:text-base text-white/60">Top {results.length} programme matches based on your answers</p>
       </div>
 
       <div className="space-y-4">
@@ -348,17 +348,17 @@ function ResultsView({ results, onReset, onView, onInterest }) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 + i * 0.12 }}
-            className="gradient-border p-5 sm:p-6 relative overflow-hidden"
+            className="gradient-border p-4 sm:p-6 relative overflow-hidden"
           >
-            <div className="flex flex-col sm:flex-row gap-5 items-start sm:items-center">
+            <div className="flex flex-col sm:flex-row gap-4 sm:gap-5 items-start sm:items-center">
               <MatchRing percent={p._match} rank={i + 1} />
               <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-2 mb-1">
-                  <span className="text-xs uppercase tracking-widest text-cyan-glow/80">{p.category}</span>
-                  <span className="text-xs px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-400/30">{p.intakeStatus}</span>
+                <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 mb-1">
+                  <span className="text-[10px] sm:text-xs uppercase tracking-widest text-cyan-glow/80">{p.category}</span>
+                  <span className="text-[10px] sm:text-xs px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-400/30">{p.intakeStatus}</span>
                 </div>
-                <h3 className="font-display font-bold text-xl sm:text-2xl mb-1">{p.programmeName}</h3>
-                <div className="text-xs text-white/60 mb-3">{p.faculty} · {p.duration} · {p.level} · {p.studyMode}</div>
+                <h3 className="font-display font-bold text-base sm:text-2xl mb-1 leading-snug">{p.programmeName}</h3>
+                <div className="text-[11px] sm:text-xs text-white/60 mb-2 sm:mb-3">{p.faculty} · {p.duration} · {p.level} · {p.studyMode}</div>
                 {p._reasons.length > 0 && (
                   <ul className="space-y-1">
                     {p._reasons.map((r, idx) => (

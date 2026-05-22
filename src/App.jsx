@@ -98,25 +98,27 @@ export default function App() {
       <Footer onAdmin={() => setAdminOpen(true)} />
 
       {/* Floating action buttons */}
-      <div className="fixed bottom-5 right-5 z-30 flex flex-col gap-3">
+      <div className="fixed bottom-4 right-4 sm:bottom-5 sm:right-5 z-30 flex flex-col gap-2.5 sm:gap-3" style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}>
         <motion.button
           initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ delay: 1.5, type: 'spring' }}
           whileHover={{ scale: 1.06 }} whileTap={{ scale: 0.95 }}
           onClick={() => setQuizOpen(true)}
-          className="group relative h-14 w-14 rounded-2xl bg-gradient-to-br from-cyan-glow to-teal-500 grid place-items-center shadow-glow-cyan"
+          className="group relative h-12 w-12 sm:h-14 sm:w-14 rounded-2xl bg-gradient-to-br from-cyan-glow to-teal-500 grid place-items-center shadow-glow-cyan"
           title="Find My Course"
+          aria-label="Find My Course"
         >
-          <Compass className="text-navy-900" size={22} />
+          <Compass className="text-navy-900" size={20} />
           <span className="absolute inset-0 rounded-2xl border border-cyan-glow/50 animate-ping opacity-60" />
         </motion.button>
         <motion.button
           initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ delay: 1.7, type: 'spring' }}
           whileHover={{ scale: 1.06 }} whileTap={{ scale: 0.95 }}
           onClick={() => setAssistantOpen(true)}
-          className="h-14 w-14 rounded-2xl bg-gradient-to-br from-gold-400 to-gold-600 grid place-items-center shadow-glow-gold"
+          className="h-12 w-12 sm:h-14 sm:w-14 rounded-2xl bg-gradient-to-br from-gold-400 to-gold-600 grid place-items-center shadow-glow-gold"
           title="Ask Assistant"
+          aria-label="Ask Assistant"
         >
-          <MessageSquare className="text-navy-900" size={22} />
+          <MessageSquare className="text-navy-900" size={20} />
         </motion.button>
       </div>
 
